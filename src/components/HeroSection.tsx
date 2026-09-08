@@ -1,0 +1,90 @@
+import { motion } from "framer-motion";
+import { CalendarDays, MessageCircle } from "lucide-react";
+
+const HeroSection = () => {
+  return (
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary" />
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+
+      {/* Glow accents */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
+
+      <div className="container relative z-10 text-center px-4">
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
+          <img src="/logo.jpg" alt="New Modern Beauty Salon Logo" className="w-28 h-28 md:w-36 md:h-36 mx-auto rounded-full object-cover border-2 border-primary/40 glow-gold mb-6" />
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="font-display text-4xl md:text-6xl lg:text-7xl font-bold gold-text leading-tight"
+        >
+          New Modern<br />Beauty Salon
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="font-elegant text-xl md:text-2xl lg:text-3xl text-foreground/80 mt-4 italic"
+        >
+          Beauty, Care & Confidence for Every Woman & Child
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="flex items-center justify-center gap-2 mt-4 text-muted-foreground font-body text-sm md:text-base"
+        >
+          <span className="inline-block w-2 h-2 rounded-full bg-primary" />
+          Trusted Beauty Experts Since 2011
+          <span className="inline-block w-1 h-1 rounded-full bg-muted-foreground" />
+          Indore
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+        >
+          <a
+            href="#booking"
+            className="flex items-center gap-2 px-8 py-4 rounded-full gold-gradient text-primary-foreground font-body font-semibold text-base glow-gold-hover transition-all duration-300 hover:scale-105"
+          >
+            <CalendarDays className="w-5 h-5" /> Book Appointment
+          </a>
+          <a
+            href="https://wa.me/919039362327"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-8 py-4 rounded-full border border-primary/40 text-primary font-body font-semibold text-base hover:bg-primary/10 transition-all duration-300 hover:scale-105"
+          >
+            <MessageCircle className="w-5 h-5" /> WhatsApp Now
+          </a>
+        </motion.div>
+
+        {/* Trust badges */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="flex flex-wrap items-center justify-center gap-6 mt-12"
+        >
+          {["Est. 2011", "Women & Kids Only", "Certified Experts"].map((badge) => (
+            <span key={badge} className="px-4 py-2 rounded-full border border-primary/20 text-primary/80 font-body text-xs tracking-widest uppercase">
+              {badge}
+            </span>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
