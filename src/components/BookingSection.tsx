@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { CalendarDays, AlertCircle, CheckCircle, Loader2 } from "lucide-react";
+import Card3DTilt from "@/components/Card3DTilt";
 
 const serviceOptions = [
   "Eyebrow Shaping", "Facial Threading", "Waxing", "Bleach", "Cleanup", "Hydra Facial", "O3+ Facial",
@@ -15,10 +16,22 @@ const serviceOptions = [
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name too long"),
-  phone: z.string().regex(/^\+91\s?\d{10}$/, "Enter valid Indian number (+91 XXXXX XXXXX)"),
+  phone: z
+    .string()
+    .min(10, "Please enter at least 10 digits")
+    .regex(
+      /^(?:\+91[\s-]?)?[6-9]\d{9}$/,
+      "Enter a valid Indian phone number (e.g. +91 90393 62327 or 9039362327)"
+    ),
   service: z.string().min(1, "Please select a service"),
   date: z.string().min(1, "Please select a date").refine(
-    (d) => new Date(d).getDay() !== 0,
+    (d) => {
+      const parts = d.split("-").map(Number);
+      if (parts.length === 3) {
+        return new Date(parts[0], parts[1] - 1, parts[2]).getDay() !== 0;
+      }
+      return true;
+    },
     "Salon is closed on Sundays"
   ),
 });
@@ -45,13 +58,14 @@ const BookingSection = () => {
 
     try {
       const sanitizedName = data.name.trim().slice(0, 100);
+      const sanitizedPhone = data.phone.trim().slice(0, 20);
       const sanitizedService = data.service.slice(0, 100);
       const sanitizedDate = data.date;
 
       const message = encodeURIComponent(
-        `Hello, I am ${sanitizedName}. I want to book ${sanitizedService} on ${sanitizedDate} at New Modern Beauty Salon.`
+        `Hello, I am ${sanitizedName} (${sanitizedPhone}). I want to book ${sanitizedService} on ${sanitizedDate} at New Modern Beauty Salon.`
       );
-      window.open(`https://wa.me/919039362327?text=${message}`, "_blank");
+      window.open(`https://wa.me/919039362327?text=${message}`, "_blank", "noopener,noreferrer");
 
       setSubmitStatus("success");
       reset();
@@ -66,26 +80,36 @@ const BookingSection = () => {
 
   return (
     <section id="booking" className="py-20 md:py-28 relative" aria-labelledby="booking-heading">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/15 to-transparent pointer-events-none" />
       <div className="container relative z-10 px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
+          viewport={{ once: true, margin: "100px" }}
+          transition={{ duration: 0.25 }}
+          className="text-center mb-10"
         >
-          <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-3">Schedule Your Visit</p>
+          <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-2">Schedule Your Visit</p>
           <h2 id="booking-heading" className="font-display text-3xl md:text-5xl font-bold gold-text">Book Appointment</h2>
         </motion.div>
 
-        <motion.form
-          initial={{ opacity: 0, y: 30 }}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          onSubmit={handleSubmit(onSubmit)}
-          className="max-w-lg mx-auto rounded-2xl border border-primary/20 bg-card/60 backdrop-blur-sm p-8 md:p-10 glow-gold space-y-5"
-          noValidate
+          viewport={{ once: true, margin: "100px" }}
+          transition={{ duration: 0.25 }}
+          className="max-w-lg mx-auto"
         >
+          <Card3DTilt
+            maxTilt={3}
+            scale={1.008}
+            className="rounded-2xl border border-primary/20 bg-card/90 p-8 md:p-10 glow-gold"
+          >
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-5"
+              noValidate
+            >
           <div>
             <label htmlFor="name" className="font-body text-sm text-muted-foreground mb-1.5 block">Your Name</label>
             <input
@@ -115,8 +139,8 @@ const BookingSection = () => {
               type="tel"
               {...register("phone")}
               required
-              maxLength={15}
-              placeholder="+91 XXXXX XXXXX"
+              maxLength={17}
+              placeholder="+91 90393 62327 or 9039362327"
               className={`w-full px-4 py-3 rounded-lg bg-secondary/50 border transition-colors text-foreground font-body text-sm focus:outline-none focus:border-primary/40 ${
                 errors.phone ? "border-destructive" : "border-primary/10"
               }`}
@@ -211,8 +235,10 @@ const BookingSection = () => {
             <AlertCircle className="w-4 h-4 text-primary/70" aria-hidden="true" />
             <p className="font-body text-xs">Salon remains closed on Sundays</p>
           </div>
-        </motion.form>
-      </div>
+        </form>
+      </Card3DTilt>
+    </motion.div>
+  </div>
     </section>
   );
 };

@@ -55,6 +55,14 @@ export const SEO = ({
 
     const robots = `${noIndex ? "noindex" : "index"}, ${noFollow ? "nofollow" : "follow"}`;
     updateMeta("robots", robots);
+
+    let canonical = document.querySelector<HTMLLinkElement>("link[rel='canonical']");
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", url);
   }, [title, description, image, url, type, noIndex, noFollow]);
 
   return null;

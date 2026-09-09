@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Pause, Play } from "lucide-react";
+import Card3DTilt from "@/components/Card3DTilt";
 
 const reviews = [
   { name: "Priya Sharma", rating: 5, text: "Absolutely the best bridal makeup experience! Ranjana ma'am understood exactly what I wanted. Felt like a queen on my wedding day." },
@@ -61,12 +62,13 @@ const ReviewsSection = () => {
     <section id="reviews" className="py-20 md:py-28 relative" aria-labelledby="reviews-heading">
       <div className="container px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
+          viewport={{ once: true, margin: "100px" }}
+          transition={{ duration: 0.25 }}
+          className="text-center mb-10"
         >
-          <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-3">What Clients Say</p>
+          <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-2">What Clients Say</p>
           <h2 id="reviews-heading" className="font-display text-3xl md:text-5xl font-bold gold-text">Client Reviews</h2>
         </motion.div>
 
@@ -74,23 +76,28 @@ const ReviewsSection = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="rounded-2xl border border-primary/15 bg-card/50 backdrop-blur-sm p-8 md:p-10 text-center glow-gold"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="flex items-center justify-center gap-1 mb-4" aria-hidden="true">
-                {Array.from({ length: reviews[current].rating }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                ))}
-              </div>
-              <p className="font-elegant text-lg md:text-xl text-foreground/80 italic leading-relaxed mb-6">
-                "{reviews[current].text}"
-              </p>
-              <p className="font-body text-sm font-semibold text-primary tracking-wide">
-                — {reviews[current].name}
-              </p>
+              <Card3DTilt
+                maxTilt={4}
+                scale={1.01}
+                className="rounded-2xl border border-primary/20 bg-card/90 p-8 md:p-10 text-center glow-gold"
+              >
+                <div className="flex items-center justify-center gap-1 mb-4" aria-hidden="true">
+                  {Array.from({ length: reviews[current].rating }).map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="font-elegant text-lg md:text-xl text-foreground/80 italic leading-relaxed mb-6">
+                  "{reviews[current].text}"
+                </p>
+                <p className="font-body text-sm font-semibold text-primary tracking-wide">
+                  — {reviews[current].name}
+                </p>
+              </Card3DTilt>
             </motion.div>
           </AnimatePresence>
 

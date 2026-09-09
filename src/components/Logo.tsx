@@ -13,29 +13,17 @@ const Logo = forwardRef<HTMLImageElement, LogoProps>(
     const loading = priority ? "eager" : "lazy";
 
     return (
-      <picture>
-        <source
-          type="image/webp"
-          srcSet={"/logo.webp"}
-          media="(min-width: 0)"
-        />
-        <source
-          type="image/avif"
-          srcSet={"/logo.avif"}
-          media="(min-width: 0)"
-        />
-        <img
-          ref={ref}
-          src="/logo.jpg"
-          alt={alt}
-          width={width}
-          height={height}
-          loading={loading}
-          decoding={priority ? "sync" : "async"}
-          className={className}
-          {...props}
-        />
-      </picture>
+      <img
+        ref={ref}
+        src="/logo.jpg"
+        alt={alt}
+        width={width}
+        height={height}
+        loading={loading}
+        decoding={priority ? "sync" : "async"}
+        className={className}
+        {...props}
+      />
     );
   }
 );

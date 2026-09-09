@@ -1,24 +1,20 @@
 import { motion } from "framer-motion";
 import { CalendarDays, MessageCircle } from "lucide-react";
 import Logo from "@/components/Logo";
-import { Hero3DBackground } from "@/components/Hero3DBackground";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Three.js 3D Background */}
-      <Hero3DBackground />
-      
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary" />
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-20 md:pb-24">
+      {/* Translucent overlay allowing Global 3D Background to shine through */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/50 pointer-events-none" />
       <div
-        className="absolute inset-0 opacity-[0.03] hero-pattern"
+        className="absolute inset-0 opacity-[0.02] hero-pattern pointer-events-none"
         style={{ backgroundImage: "url('/hero-pattern.svg')" }}
       />
 
       {/* Glow accents */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container relative z-10 text-center px-4">
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>

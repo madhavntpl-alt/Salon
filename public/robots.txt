@@ -1,16 +1,39 @@
+# Robots.txt for New Modern Beauty Salon
+User-agent: *
+Allow: /
+
+# Search Engine Crawlers
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
+User-agent: Yandex
 Allow: /
 
-User-agent: facebookexternalhit
+# AI Assistants & Search Bots (explicitly permitted)
+User-agent: GPTBot
 Allow: /
 
-User-agent: *
+User-agent: ChatGPT-User
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemaps & LLM Context
 Sitemap: https://newmodernbeautysalon.com/sitemap.xml
+# LLM Context File: https://newmodernbeautysalon.com/llms.txt
