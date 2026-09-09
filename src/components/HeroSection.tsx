@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
 import { CalendarDays, MessageCircle } from "lucide-react";
 import Logo from "@/components/Logo";
+import { Hero3DBackground } from "@/components/Hero3DBackground";
 
 const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Three.js 3D Background */}
+      <Hero3DBackground />
+      
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary" />
       <div
