@@ -10,10 +10,9 @@ const Hero3DBackgroundInner = lazy(async () => {
     className?: string;
   }
 
-  return {
-    default: ({ className = "" }: Hero3DBackgroundProps) => {
-      const containerRef = useRef<HTMLDivElement>(null);
-      const animationFrameRef = useRef<number>();
+  const BackgroundCanvas = ({ className = "" }: Hero3DBackgroundProps) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const animationFrameRef = useRef<number>();
 
       useEffect(() => {
         const container = containerRef.current;
@@ -198,9 +197,10 @@ const Hero3DBackgroundInner = lazy(async () => {
           aria-hidden="true"
         />
       );
-    }
-  };
-});
+    };
+
+    return { default: BackgroundCanvas };
+  });
 
 export const Hero3DBackground = ({ className = "" }: { className?: string }) => {
   return (

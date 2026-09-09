@@ -1,0 +1,6 @@
+{
+  "name": "New Modern Beauty Salon",
+  "description": "Premium women and kids beauty salon in Indore offering bridal makeup, hair styling, facials, keratin treatment, and grooming services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
