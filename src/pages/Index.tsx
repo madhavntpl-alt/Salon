@@ -7,10 +7,12 @@ import ReviewsSection from "@/components/ReviewsSection";
 import MapSection from "@/components/MapSection";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO />
       <Navbar />
       <main>
         <HeroSection />

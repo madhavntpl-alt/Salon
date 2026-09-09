@@ -1,12 +1,16 @@
 import { motion } from "framer-motion";
 import { CalendarDays, MessageCircle } from "lucide-react";
+import Logo from "@/components/Logo";
 
 const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary" />
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+      <div
+        className="absolute inset-0 opacity-[0.03] hero-pattern"
+        style={{ backgroundImage: "url('/hero-pattern.svg')" }}
+      />
 
       {/* Glow accents */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
@@ -14,7 +18,13 @@ const HeroSection = () => {
 
       <div className="container relative z-10 text-center px-4">
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
-          <img src="/logo.jpg" alt="New Modern Beauty Salon Logo" className="w-28 h-28 md:w-36 md:h-36 mx-auto rounded-full object-cover border-2 border-primary/40 glow-gold mb-6" />
+          <Logo
+            width={144}
+            height={144}
+            className="w-28 h-28 md:w-36 md:h-36 mx-auto rounded-full object-cover border-2 border-primary/40 glow-gold mb-6"
+            priority
+            alt="New Modern Beauty Salon Logo"
+          />
         </motion.div>
 
         <motion.h1
@@ -55,17 +65,17 @@ const HeroSection = () => {
         >
           <a
             href="#booking"
-            className="flex items-center gap-2 px-8 py-4 rounded-full gold-gradient text-primary-foreground font-body font-semibold text-base glow-gold-hover transition-all duration-300 hover:scale-105"
+            className="flex items-center gap-2 px-8 py-4 rounded-full gold-gradient text-primary-foreground font-body font-semibold text-base glow-gold-hover transition-all duration-300 hover:scale-105 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <CalendarDays className="w-5 h-5" /> Book Appointment
+            <CalendarDays className="w-5 h-5" aria-hidden="true" /> Book Appointment
           </a>
           <a
             href="https://wa.me/919039362327"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-8 py-4 rounded-full border border-primary/40 text-primary font-body font-semibold text-base hover:bg-primary/10 transition-all duration-300 hover:scale-105"
+            className="flex items-center gap-2 px-8 py-4 rounded-full border border-primary/40 text-primary font-body font-semibold text-base hover:bg-primary/10 transition-all duration-300 hover:scale-105 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <MessageCircle className="w-5 h-5" /> WhatsApp Now
+            <MessageCircle className="w-5 h-5" aria-hidden="true" /> WhatsApp Now
           </a>
         </motion.div>
 

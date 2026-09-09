@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Pause, Play } from "lucide-react";
 
 const reviews = [
   { name: "Priya Sharma", rating: 5, text: "Absolutely the best bridal makeup experience! Ranjana ma'am understood exactly what I wanted. Felt like a queen on my wedding day." },
@@ -12,14 +12,53 @@ const reviews = [
 
 const ReviewsSection = () => {
   const [current, setCurrent] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => setCurrent((p) => (p + 1) % reviews.length), 5000);
-    return () => clearInterval(timer);
+  const startTimer = useCallback(() => {
+    if (timerRef.current) return;
+    timerRef.current = setInterval(() => {
+      setCurrent((p) => (p + 1) % reviews.length);
+    }, 5000);
   }, []);
 
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const togglePlay = useCallback(() => {
+    if (isPlaying) {
+      stopTimer();
+    } else {
+      startTimer();
+    }
+    setIsPlaying((prev) => !prev);
+  }, [isPlaying, startTimer, stopTimer]);
+
+  useEffect(() => {
+    startTimer();
+    return () => stopTimer();
+  }, [startTimer, stopTimer]);
+
+  const handleKeyDown = (e: React.KeyboardEvent, idx: number) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      setCurrent((prev) => (prev - 1 + reviews.length) % reviews.length);
+      stopTimer();
+      setIsPlaying(false);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      setCurrent((prev) => (prev + 1) % reviews.length);
+      stopTimer();
+      setIsPlaying(false);
+    }
+  };
+
   return (
-    <section id="reviews" className="py-20 md:py-28 relative">
+    <section id="reviews" className="py-20 md:py-28 relative" aria-labelledby="reviews-heading">
       <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -28,7 +67,7 @@ const ReviewsSection = () => {
           className="text-center mb-14"
         >
           <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-3">What Clients Say</p>
-          <h2 className="font-display text-3xl md:text-5xl font-bold gold-text">Client Reviews</h2>
+          <h2 id="reviews-heading" className="font-display text-3xl md:text-5xl font-bold gold-text">Client Reviews</h2>
         </motion.div>
 
         <div className="max-w-2xl mx-auto relative min-h-[240px]">
@@ -41,7 +80,7 @@ const ReviewsSection = () => {
               transition={{ duration: 0.5 }}
               className="rounded-2xl border border-primary/15 bg-card/50 backdrop-blur-sm p-8 md:p-10 text-center glow-gold"
             >
-              <div className="flex items-center justify-center gap-1 mb-4">
+              <div className="flex items-center justify-center gap-1 mb-4" aria-hidden="true">
                 {Array.from({ length: reviews[current].rating }).map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-primary text-primary" />
                 ))}
@@ -55,15 +94,36 @@ const ReviewsSection = () => {
             </motion.div>
           </AnimatePresence>
 
-          <div className="flex items-center justify-center gap-2 mt-6">
+          <div className="flex items-center justify-center gap-3 mt-6">
             {reviews.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrent(idx)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === current ? "bg-primary w-6" : "bg-primary/30"}`}
+                onClick={() => {
+                  setCurrent(idx);
+                  stopTimer();
+                  setIsPlaying(false);
+                }}
+                onKeyDown={(e) => handleKeyDown(e, idx)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${idx === current ? "bg-primary w-6" : "bg-primary/30"}`}
                 aria-label={`Go to review ${idx + 1}`}
+                aria-current={idx === current ? "true" : "false"}
               />
             ))}
+
+            <button
+              onClick={togglePlay}
+              onKeyDown={(e) => {
+                if (e.key === " " || e.key === "Enter") {
+                  e.preventDefault();
+                  togglePlay();
+                }
+              }}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              aria-label={isPlaying ? "Pause auto-rotation" : "Resume auto-rotation"}
+              aria-pressed={isPlaying}
+            >
+              {isPlaying ? <Pause className="w-5 h-5" aria-hidden="true" /> : <Play className="w-5 h-5" aria-hidden="true" />}
+            </button>
           </div>
         </div>
       </div>

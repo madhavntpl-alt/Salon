@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Award, Star, Sparkles } from "lucide-react";
+import { Award, Star, Sparkles, Check } from "lucide-react";
 
 const certifications = [
   "Orane International (Beauty & Professional Makeup Training)",
@@ -15,7 +15,7 @@ const expertise = [
 
 const OwnerSection = () => {
   return (
-    <section id="about" className="py-20 md:py-28 relative">
+    <section id="about" className="py-20 md:py-28 relative" aria-labelledby="about-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/30 to-background" />
       <div className="container relative z-10 px-4">
         <motion.div
@@ -27,7 +27,7 @@ const OwnerSection = () => {
         >
           <div className="text-center mb-10">
             <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-3">Meet the Expert</p>
-            <h2 className="font-display text-3xl md:text-5xl font-bold gold-text">Ranjana Singh</h2>
+            <h2 id="about-heading" className="font-display text-3xl md:text-5xl font-bold gold-text">Ranjana Singh</h2>
             <p className="font-elegant text-lg md:text-xl text-foreground/70 mt-2 italic">Founder & Senior Beauty Expert</p>
           </div>
 
@@ -35,7 +35,7 @@ const OwnerSection = () => {
             {/* Experience */}
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full gold-gradient flex items-center justify-center">
-                <Star className="w-5 h-5 text-primary-foreground" />
+                <Star className="w-5 h-5 text-primary-foreground" aria-hidden="true" />
               </div>
               <div>
                 <p className="font-body text-sm text-muted-foreground">Experience</p>
@@ -46,12 +46,15 @@ const OwnerSection = () => {
             {/* Certifications */}
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-3">
-                <Award className="w-5 h-5 text-primary" />
+                <Award className="w-5 h-5 text-primary" aria-hidden="true" />
                 <p className="font-body text-sm font-semibold text-primary tracking-wide uppercase">Certified Training</p>
               </div>
-              <div className="space-y-2 pl-7">
+              <div className="space-y-2">
                 {certifications.map((c) => (
-                  <p key={c} className="font-body text-sm text-foreground/80">✦ {c}</p>
+                  <p key={c} className="font-body text-sm text-foreground/80 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true" />
+                    {c}
+                  </p>
                 ))}
               </div>
             </div>
@@ -59,12 +62,15 @@ const OwnerSection = () => {
             {/* Expertise */}
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="w-5 h-5 text-primary" />
+                <Sparkles className="w-5 h-5 text-primary" aria-hidden="true" />
                 <p className="font-body text-sm font-semibold text-primary tracking-wide uppercase">Expertise</p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {expertise.map((e) => (
-                  <p key={e} className="font-body text-sm text-foreground/80">✦ {e}</p>
+                  <p key={e} className="font-body text-sm text-foreground/80 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true" />
+                    {e}
+                  </p>
                 ))}
               </div>
             </div>

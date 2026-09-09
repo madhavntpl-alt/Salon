@@ -100,3 +100,20 @@ html {
   background: hsl(43 72% 55% / 0.3);
   border-radius: 3px;
 }
+
+.hero-pattern {
+  background-image: url('/hero-pattern.svg');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
